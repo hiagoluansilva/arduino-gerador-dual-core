@@ -1,42 +1,36 @@
+🇧🇷 Português | 🇺🇸 [English](#english)
+
 # arduino-gerador-dual-core
 
-Gerador de funções de dois canais simultâneos no ESP32 usando os dois núcleos do processador (dual-core).
+Gerador dual-canal no ESP32 usando os dois núcleos: seno no Core1 (ISR), triangular no Core0 (FreeRTOS).
 
-## Descrição
-
-Versão avançada do gerador de funções que explora o ESP32 dual-core: o sinal **senoidal** é gerado no Core 1 via ISR de timer de hardware, enquanto o sinal **triangular** é gerado no Core 0 por uma task FreeRTOS. Os dois canais operam simultaneamente e de forma independente.
-
-## Hardware
-
-- Placa: ESP32
-- Canal seno: GPIO 25 (DAC1) — Core 1
-- Canal triangular: GPIO 26 (DAC2) — Core 0
-
-## Arquitetura
-
-```
-Core 1 (App CPU)        Core 0 (Protocol CPU)
-─────────────────       ──────────────────────
-Timer ISR (seno)        FreeRTOS Task (triangular)
-dacWrite(25, ...)       dacWrite(26, ...)
-```
-
-## Parâmetros
-
-| Parâmetro | Valor |
-|-----------|-------|
-| Amostras por ciclo | 112 |
-| Resolução DAC | 8 bits |
-| Timer Core1 prescaler | 992 |
-| Intervalo Core0 | 100 µs |
+**Core1:** GPIO 25 (seno via timer ISR)
+**Core0:** GPIO 26 (triangular via FreeRTOS task)
 
 ## Como usar
 
 1. Abra `gerador_dual_core.ino` no Arduino IDE
 2. Selecione **ESP32 Dev Module**
 3. Compile e grave
-4. Observe os dois sinais simultâneos nos pinos 25 e 26
-
-## Escola
 
 Centro Tecnológico Liberato — Novo Hamburgo/RS
+
+---
+
+<a name="english"></a>
+🇧🇷 [Português](#) | 🇺🇸 English
+
+# arduino-gerador-dual-core
+
+Dual-channel generator on ESP32 using both cores: sine on Core1 (ISR), triangle on Core0 (FreeRTOS).
+
+**Core1:** GPIO 25 (sine via timer ISR)
+**Core0:** GPIO 26 (triangle via FreeRTOS task)
+
+## Usage
+
+1. Open `gerador_dual_core.ino` in Arduino IDE
+2. Select **ESP32 Dev Module**
+3. Compile and flash
+
+Centro Tecnológico Liberato — Novo Hamburgo/RS, Brazil
